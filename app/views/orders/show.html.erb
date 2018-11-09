@@ -19,7 +19,7 @@
       </tbody>
     </table>
     <div>
-      Email: <%= @order.email %>
+      Email: <%= @user.email %>
     </div>
     <div> Total Item Count: <%= (@order.line_items.sum(:quantity))%> </div>
     <div> Total Price: $<%= (@order.line_items.sum(:total_price_cents))/100.0%>  </div>

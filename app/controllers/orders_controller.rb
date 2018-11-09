@@ -2,13 +2,16 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @user = User.find(session[:user_id])
   end
 
   def create
     charge = perform_stripe_charge
     order  = create_order(charge)
+    user = User.find(session[:user_id])
 
     if order.valid?
+      UserMailer.order_email(user,order).deliver
       empty_cart!
       redirect_to order, notice: 'Your Order has been placed.'
     else
@@ -52,6 +55,7 @@ class OrdersController < ApplicationController
         total_price: product.price * quantity
       )
     end
+
     order.save!
     order
   end

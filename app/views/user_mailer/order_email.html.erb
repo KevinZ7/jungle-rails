@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Thank you for making a purchase at Jungle, <%= @user.first_name %></h1>
+    <p>
+      You have successfully made an order on jungle with the following items:
+    </p>
+    <ul>
+      <% @order.line_items.each do |o| %>
+        <li>
+          <%= o.product.name %>
+        </li>
+      <% end %>
+      <li>
+        Total: $ <%= (@order.line_items.sum(:total_price_cents))/100.0%>
+      </li>
+    </ul>
+
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
